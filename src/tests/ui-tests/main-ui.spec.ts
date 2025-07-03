@@ -26,7 +26,7 @@ test.describe('Log In page', () => {
     await expect(page).toHaveURL(/sign-in/);
   });
 
-  test('Verify login with empty password', async ({ page, app: { signInPage }, faker }) => {
+  test('Verify login with empty password', async ({ app: { signInPage }, faker }) => {
     const email = faker.internet.email();
 
     await signInPage.emailInput.fill(email);
@@ -48,7 +48,7 @@ test.describe('Log In page', () => {
     await expect(signInPage.logInBtn).toBeDisabled();
   });
 
-  test('Verify login with empty email and password', async ({ page, app: { signInPage }, faker }) => {
+  test('Verify login with empty email and password', async ({ app: { signInPage }, faker }) => {
     await signInPage.passwordInput.click();
     await signInPage.emailInput.click();
     await signInPage.passwordInput.click();
