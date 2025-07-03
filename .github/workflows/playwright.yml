@@ -24,15 +24,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install chromium
 
-      - name: Check proxy availability
-        run: |
-          sudo apt-get update && sudo apt-get install -y curl
-          echo "Checking proxy:"
-          curl --socks5 195.114.7.6:8095 https://ipinfo.io/json || echo "Proxy might be unavailable"
-
-      - name: Run Playwright tests with proxy
-        env:
-          PROXY_SERVER: 'socks5://195.114.7.6:8095'
+      - name: Run Playwright tests 
         run: npx playwright test
 
       - name: Upload Playwright report

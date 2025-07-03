@@ -10,6 +10,9 @@ export default defineConfig({
   use: {
     trace: 'on-first-retry',
     baseURL: 'https://paydo.com',
+    proxy: {
+      server: 'socks5://104.248.203.234:1080',
+    },
   },
 
   projects: [
