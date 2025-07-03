@@ -25,3 +25,26 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+        - name: Install proxy tools
+          run: |
+            sudo apt-get update
+            sudo apt-get install -y proxychains
+
+        - name: Configure proxychains for Ukraine
+          run: |
+            echo "strict_chain" | sudo tee /etc/proxychains.conf
+            echo "proxy_dns" | sudo tee -a /etc/proxychains.conf
+            echo "tcp_read_time_out 15000" | sudo tee -a /etc/proxychains.conf
+            echo "tcp_connect_time_out 8000" | sudo tee -a /etc/proxychains.conf
+            echo "[ProxyList]" | sudo tee -a /etc/proxychains.conf
+            echo "socks5 91.200.40.33 1080" | sudo tee -a /etc/proxychains.conf
+
+        - name: Run Playwright tests via Ukraine proxy
+          env:
+            NODE_OPTIONS: "--dns-result-order=ipv4first"
+          run: |
+            proxychains npx playwright test
+
+
+
