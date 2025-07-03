@@ -2,6 +2,7 @@ import { RequestHolder } from './requestHolder';
 import { CreateUserRequest } from '../models/user.models';
 import { APIResponse } from '@playwright/test';
 
+// API user controller for from the task 3
 export class UserController extends RequestHolder {
   private baseApiUrl = 'USE_REAL_API_URL';
   public userRoute = '/api/user';

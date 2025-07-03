@@ -12,6 +12,11 @@ export class SignIn extends BasePage {
   public authError = this.signInForm.locator('.ngp-info-block.mat-error');
   public logInBtn = this.signInForm.getByRole('button', { name: 'Log in' });
 
+  /**
+   * Open the sign in page.
+   * @param {string} accountType - The type of the account to sign in.
+   * @returns {Promise<void>} - Return the promise to open the sign in page.
+   */
   async open(accountType: 'personal' | 'business'): Promise<void> {
     await this.page.goto(this.url.replace('{accountType}', accountType));
   }

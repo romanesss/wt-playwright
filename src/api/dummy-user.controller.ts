@@ -2,7 +2,10 @@ import { RequestHolder } from './requestHolder';
 import { PostDummyUserRequest, PostDummyUserResponse } from '../models/dummy-user.models';
 import { APIResponse } from '@playwright/test';
 
-// Lin to API dock: https://dummyapi.io/docs
+/**
+ * API user controller for real API Dummy service
+ * Link to API dock: https://dummyapi.io/docs
+ */
 export class DummyUserController extends RequestHolder {
   private baseApiUrl = 'https://dummyapi.io/data/v1';
   private apiKey = '640ceaf68678b6e67b16b17f';
