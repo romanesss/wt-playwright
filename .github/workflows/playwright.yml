@@ -22,27 +22,18 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install chromium
 
-      - name: Install proxy tools
+      - name: Check proxy availability
         run: |
-          sudo apt-get update
-          sudo apt-get install -y proxychains
+          sudo apt-get update && sudo apt-get install -y curl
+          echo "Checking proxy:"
+          curl --socks5 195.114.7.6:8095 https://ipinfo.io/json || echo "Proxy might be unavailable"
 
-      - name: Configure proxychains for Ukraine
-        run: |
-          echo "strict_chain" | sudo tee /etc/proxychains.conf
-          echo "proxy_dns" | sudo tee -a /etc/proxychains.conf
-          echo "tcp_read_time_out 15000" | sudo tee -a /etc/proxychains.conf
-          echo "tcp_connect_time_out 8000" | sudo tee -a /etc/proxychains.conf
-          echo "[ProxyList]" | sudo tee -a /etc/proxychains.conf
-          echo "socks5 91.200.40.33 1080" | sudo tee -a /etc/proxychains.conf
-
-      - name: Run Playwright tests via Ukraine proxy
+      - name: Run Playwright tests with proxy
         env:
-          NODE_OPTIONS: '--dns-result-order=ipv4first'
-        run: |
-          proxychains npx playwright test
+          PROXY_SERVER: 'socks5://195.114.7.6:8095'
+        run: npx playwright test
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
